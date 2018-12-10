@@ -1,11 +1,12 @@
-{ stdenv, fetchurl, python2Packages }:
+{ stdenv, fetchgit, python3Packages }:
 
-python2Packages.buildPythonApplication rec {
-  name = "iotop-0.6";
+python3Packages.buildPythonApplication rec {
+  name = "iotop-unstable-2018-12-10";
 
-  src = fetchurl {
-    url = "http://guichaz.free.fr/iotop/files/${name}.tar.bz2";
-    sha256 = "0nzprs6zqax0cwq8h7hnszdl3d2m4c2d4vjfxfxbnjfs9sia5pis";
+  src = fetchgit {
+    url = "https://repo.or.cz/iotop.git";
+    rev = "7c51ce0e29bd135c216f18e18f0c4ab769af0d6f";
+    sha256 = "188g6p9z5p8apw6s2wi671f327x5mxj5rj6lx17wyq32css70vlh";
   };
 
   doCheck = false;
