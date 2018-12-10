@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitLab, python, ensureNewerSourcesForZipFilesHook }:
+{ stdenv, fetchFromGitLab, python3, ensureNewerSourcesForZipFilesHook }:
 
 stdenv.mkDerivation rec {
   name = "waf-${version}";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "1r4nyxpf07w98bx9zx0xii97rwsc27s6898xi9ph25p0n6hsdxxg";
   };
 
-  buildInputs = [ python ensureNewerSourcesForZipFilesHook ];
+  buildInputs = [ python3 ensureNewerSourcesForZipFilesHook ];
 
   configurePhase = ''
     python waf-light configure

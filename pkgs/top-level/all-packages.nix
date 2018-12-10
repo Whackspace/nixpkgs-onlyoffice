@@ -6255,7 +6255,7 @@ in
 
   volumeicon = callPackage ../tools/audio/volumeicon { };
 
-  waf = callPackage ../development/tools/build-managers/waf { python = python3; };
+  waf = callPackage ../development/tools/build-managers/waf { };
   wafHook = makeSetupHook {
     deps = [ python ];
     substitutions = { inherit waf; };
@@ -13998,9 +13998,7 @@ in
 
   samba3 = callPackage ../servers/samba/3.x.nix { };
 
-  samba4 = callPackage ../servers/samba/4.x.nix {
-    python = python2;
-  };
+  samba4 = callPackage ../servers/samba/4.x.nix { };
 
   sambaMaster = callPackage ../servers/samba/master.nix { };
 
