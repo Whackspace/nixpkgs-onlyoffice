@@ -1,5 +1,5 @@
 { stdenv, buildPythonPackage, fetchPypi
-, unittest2 }:
+, unittest2, isPyPy }:
 
 buildPythonPackage rec {
   pname = "funcsigs";
@@ -11,6 +11,8 @@ buildPythonPackage rec {
   };
 
   buildInputs = [ unittest2 ];
+
+  doCheck = !isPyPy;
 
   meta = with stdenv.lib; {
     description = "Python function signatures from PEP362 for Python 2.6, 2.7 and 3.2+";
