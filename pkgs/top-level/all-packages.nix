@@ -8508,6 +8508,10 @@ in
     llvmPackages = llvmPackages_7;
   };
 
+  ccls = callPackage ../development/tools/misc/ccls {
+    llvmPackages = llvmPackages_7;
+  };
+
   credstash = with python3Packages; toPythonApplication credstash;
 
   creduce = callPackage ../development/tools/misc/creduce {
