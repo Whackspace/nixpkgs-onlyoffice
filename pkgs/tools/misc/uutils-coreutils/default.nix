@@ -1,7 +1,6 @@
 { lib
 , stdenv
 , fetchFromGitHub
-, fetchpatch
 , unstableGitUpdater
 , rustPlatform
 , cargo
@@ -24,7 +23,8 @@ stdenv.mkDerivation rec {
     owner = "uutils";
     repo = "coreutils";
     rev = version;
-    sha256 = "01zwvadfd570vbsy52svp0vi5r2p873c33vn2h4mr7868myl6q9g";
+    name = "${pname}-${version}";
+    sha256 = "sha256-N2CuMkhYFKsvshHXDVqe0itYuS+a9njathBjj3N/RGI=";
   };
 
   postPatch = ''
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   cargoDeps = rustPlatform.fetchCargoTarball {
     inherit src;
     name = "${pname}-${version}";
-    hash = "sha256:19li3gmb5dmrmiiiy9ihr1rl68lz14j2gsgqpjcsn52rkcy17dzh";
+    hash = "sha256-zuJAVxt3mfw5JBjaulyXNK0Q+geItPF7+JKMZhcT3TU=";
   };
 
   nativeBuildInputs = [ rustPlatform.cargoSetupHook ]
@@ -55,6 +55,10 @@ stdenv.mkDerivation rec {
 
   # too many impure/platform-dependent tests
   doCheck = false;
+
+  passthru.updateScript = unstableGitUpdater {
+    url = "https://github.com/uutils/coreutils.git";
+  };
 
   meta = with lib; {
     description = "Cross-platform Rust rewrite of the GNU coreutils";
