@@ -67,7 +67,7 @@ with pkgs;
   clangStdenvNoLibs = mkStdenvNoLibs clangStdenv;
 
   stdenvUutilsCoreutils = let
-    uutils-coreutils = pkgs.uutils-coreutils;
+    uutils-coreutils = pkgs.uutils-coreutils-minimal;
     bintools = wrapBintoolsWith {
       bintools = stdenv.cc.bintools.bintools;
       coreutils = uutils-coreutils;
@@ -4990,6 +4990,8 @@ with pkgs;
   };
 
   uutils-coreutils-prefixed = pkgs.uutils-coreutils.override { withPrefix = true; };
+
+  uutils-coreutils-minimal = pkgs.uutils-coreutils.override { withDocs = false; };
 
   volctl = callPackage ../tools/audio/volctl { };
 

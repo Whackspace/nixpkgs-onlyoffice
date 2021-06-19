@@ -1,11 +1,14 @@
 { lib
 , stdenv
 , fetchFromGitHub
+, fetchpatch
+, unstableGitUpdater
 , rustPlatform
 , cargo
-, sphinx
 , Security
 , libiconv
+, withDocs ? true
+, sphinx
 , withPrefix ? false
 , buildMulticallBinary ? true
 }:
@@ -24,13 +27,20 @@ stdenv.mkDerivation rec {
     sha256 = "01zwvadfd570vbsy52svp0vi5r2p873c33vn2h4mr7868myl6q9g";
   };
 
+  postPatch = ''
+    # don't enforce the building of the man page
+    substituteInPlace GNUmakefile \
+      --replace 'install: build' 'install:'
+  '';
+
   cargoDeps = rustPlatform.fetchCargoTarball {
     inherit src;
     name = "${pname}-${version}";
     hash = "sha256:19li3gmb5dmrmiiiy9ihr1rl68lz14j2gsgqpjcsn52rkcy17dzh";
   };
 
-  nativeBuildInputs = [ rustPlatform.cargoSetupHook sphinx ];
+  nativeBuildInputs = [ rustPlatform.cargoSetupHook ]
+    ++ lib.optional withDocs sphinx;
 
   buildInputs = lib.optionals stdenv.isDarwin [ Security libiconv ];
 
@@ -40,7 +50,8 @@ stdenv.mkDerivation rec {
     "PROFILE=release"
     "INSTALLDIR_MAN=${placeholder "out"}/share/man/man1"
   ] ++ lib.optionals withPrefix [ "PROG_PREFIX=${prefix}" ]
-  ++ lib.optionals buildMulticallBinary [ "MULTICALL=y" ];
+  ++ lib.optionals buildMulticallBinary [ "MULTICALL=y" ]
+  ++ lib.optionals (!withDocs) [ "build-coreutils" "build-pkgs" ];
 
   # too many impure/platform-dependent tests
   doCheck = false;
