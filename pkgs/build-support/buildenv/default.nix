@@ -17,6 +17,9 @@ lib.makeOverridable
 , # Whether to ignore collisions or abort.
   ignoreCollisions ? false
 
+  # Wether to supress warnings about collisions or print them.
+, surpessCollisions ? false
+
 , # If there is a collision, check whether the contents and permissions match
   # and only if not, throw a collision error.
   checkCollisionContents ? true
@@ -77,6 +80,6 @@ runCommand name
     passAsFile = if builtins.stringLength pkgs >= 128*1024 then [ "pkgs" ] else [ ];
   }
   ''
-    ${buildPackages.perl}/bin/perl -w ${builder}
+    ${buildPackages.perl}/bin/perl -w ${lib.optionalString surpessCollisions "-X"} ${builder}
     eval "$postBuild"
   '')
