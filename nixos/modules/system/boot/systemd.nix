@@ -424,6 +424,9 @@ in
               (optional (type == "oneshot" && (restart == "always" || restart == "on-success"))
                 "Service '${name}.service' with 'Type=oneshot' cannot have 'Restart=always' or 'Restart=on-success'"
               )
+              (optional (type != "oneshot" && restart == "" )
+                "Service '${name}.service' must have set Restart'"
+              )
               (optional hasDeprecated
                 "Service '${name}.service' uses the attribute 'StartLimitInterval' in the Service section, which is deprecated. See https://github.com/NixOS/nixpkgs/issues/45786."
               )
