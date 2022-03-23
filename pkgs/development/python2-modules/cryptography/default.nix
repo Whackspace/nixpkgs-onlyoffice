@@ -4,7 +4,7 @@
 , isPy27
 , ipaddress
 , openssl
-, cryptography_vectors
+, cryptography-vectors
 , darwin
 , packaging
 , six
@@ -47,7 +47,7 @@ buildPythonPackage rec {
   ];
 
   checkInputs = [
-    cryptography_vectors
+    cryptography-vectors
     hypothesis
     iso8601
     pretend
