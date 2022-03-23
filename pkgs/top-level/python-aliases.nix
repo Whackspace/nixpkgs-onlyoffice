@@ -23,16 +23,15 @@ let
                           then throw "Alias ${n} is still in python-packages.nix"
                           else alias;
 
-  mapAliases = aliases:
-    lib.mapAttrs (n: alias: removeDistribute
-                             (removeRecurseForDerivations
-                              (checkInPkgs n alias)))
-                     aliases;
+  mapAliases = lib.mapAttrs
+      (n: alias: removeDistribute
+        (removeRecurseForDerivations
+          (checkInPkgs n alias)));
 in
 
-  ### Deprecated aliases - for backward compatibility
+### Deprecated aliases - for backward compatibility
 
-mapAliases ({
+mapAliases {
   anyjson = throw "anyjson has been removed, it was using setuptools 2to3 translation feature, which has been removed in setuptools 58"; # added 2022-01-18
   asyncio-nats-client = nats-py; # added 2022-02-08
   blockdiagcontrib-cisco = throw "blockdiagcontrib-cisco is not compatible with blockdiag 2.0.0 and has been removed."; # added 2020-11-29
@@ -128,4 +127,4 @@ mapAliases ({
   xenomapper = throw "xenomapper was moved to pkgs.xenomapper"; # added 2021-12-31
   zc-buildout221 = zc-buildout; # added 2021-07-21
   zc_buildout_nix = throw "zc_buildout_nix was pinned to a version no longer compatible with other modules";
-})
+}
