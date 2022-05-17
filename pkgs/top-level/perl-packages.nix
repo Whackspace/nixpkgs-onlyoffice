@@ -11252,7 +11252,7 @@ let
     };
   };
 
-  IOSocketInet6 = buildPerlModule {
+  IOSocketINET6 = buildPerlModule {
     pname = "IO-Socket-INET6";
     version = "2.72";
     src = fetchurl {

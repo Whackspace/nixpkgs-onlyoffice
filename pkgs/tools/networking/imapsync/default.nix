@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     IOSocketSSL DigestHMAC URI FileCopyRecursive IOTee UnicodeString
     DataUniqid JSONWebToken TestMockGuard LWP CryptOpenSSLRSA
     LWPProtocolHttps Readonly TestPod TestMockObject ParseRecDescent
-    IOSocketInet6 NTLM
+    IOSocketINET6 NTLM
   ];
 
   meta = with lib; {
