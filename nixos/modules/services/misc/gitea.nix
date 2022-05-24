@@ -286,6 +286,13 @@ in
         description = "Upper level of template and static files path.";
       };
 
+      camoHmacKeyFile = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        example = "/var/lib/secrets/gitea/camoHmacKey";
+        description = "Path to a file containing the camo HMAC key.";
+      };
+
       mailerPasswordFile = mkOption {
         type = types.nullOr types.str;
         default = null;
@@ -396,8 +403,11 @@ in
           LFS_START_SERVER = true;
           LFS_CONTENT_PATH = cfg.lfs.contentDir;
         })
-
       ];
+
+      camo = {
+        HMAC_KEY = "#hmackey#";
+      };
 
       session = {
         COOKIE_NAME = "session";
@@ -502,7 +512,7 @@ in
         replaceSecretBin = "${pkgs.replace-secret}/bin/replace-secret";
       in ''
         # copy custom configuration and generate a random secret key if needed
-        ${optionalString (cfg.useWizard == false) ''
+        ${optionalString (!cfg.useWizard) ''
           function gitea_setup {
             cp -f ${configFile} ${runConfig}
 
@@ -533,6 +543,10 @@ in
             ${replaceSecretBin} '#oauth2jwtsecret#' '${oauth2JwtSecret}' '${runConfig}'
             ${replaceSecretBin} '#lfsjwtsecret#' '${lfsJwtSecret}' '${runConfig}'
             ${replaceSecretBin} '#internaltoken#' '${internalToken}' '${runConfig}'
+
+            ${lib.optionalString (cfg.camoHmacKeyFile != null) ''
+              ${replaceSecretBin} '#hmackey#' '${cfg.camoHmacKeyFile}' '${runConfig}'
+            ''}
 
             ${lib.optionalString (cfg.mailerPasswordFile != null) ''
               ${replaceSecretBin} '#mailerpass#' '${cfg.mailerPasswordFile}' '${runConfig}'
