@@ -463,26 +463,14 @@ in
 
     systemd.tmpfiles.rules = [
       "d '${cfg.dump.backupDir}' 0750 ${cfg.user} gitea - -"
-      "z '${cfg.dump.backupDir}' 0750 ${cfg.user} gitea - -"
-      "Z '${cfg.dump.backupDir}' - ${cfg.user} gitea - -"
       "d '${cfg.lfs.contentDir}' 0750 ${cfg.user} gitea - -"
-      "z '${cfg.lfs.contentDir}' 0750 ${cfg.user} gitea - -"
-      "Z '${cfg.lfs.contentDir}' - ${cfg.user} gitea - -"
       "d '${cfg.repositoryRoot}' 0750 ${cfg.user} gitea - -"
-      "z '${cfg.repositoryRoot}' 0750 ${cfg.user} gitea - -"
-      "Z '${cfg.repositoryRoot}' - ${cfg.user} gitea - -"
       "d '${cfg.stateDir}' 0750 ${cfg.user} gitea - -"
       "d '${cfg.stateDir}/conf' 0750 ${cfg.user} gitea - -"
       "d '${cfg.stateDir}/custom' 0750 ${cfg.user} gitea - -"
       "d '${cfg.stateDir}/custom/conf' 0750 ${cfg.user} gitea - -"
       "d '${cfg.stateDir}/log' 0750 ${cfg.user} gitea - -"
-      "z '${cfg.stateDir}' 0750 ${cfg.user} gitea - -"
-      "z '${cfg.stateDir}/.ssh' 0700 ${cfg.user} gitea - -"
-      "z '${cfg.stateDir}/conf' 0750 ${cfg.user} gitea - -"
-      "z '${cfg.stateDir}/custom' 0750 ${cfg.user} gitea - -"
-      "z '${cfg.stateDir}/custom/conf' 0750 ${cfg.user} gitea - -"
-      "z '${cfg.stateDir}/log' 0750 ${cfg.user} gitea - -"
-      "Z '${cfg.stateDir}' - ${cfg.user} gitea - -"
+      "d '${cfg.stateDir}/.ssh' 0700 ${cfg.user} gitea - -"
 
       # If we have a folder or symlink with gitea locales, remove it
       # And symlink the current gitea locales in place
