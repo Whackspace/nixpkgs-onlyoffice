@@ -71,6 +71,11 @@ in
         "Package to use. Should always be the latest version, for security reasons, since this module uses very new features and to not get out of sync with the Steam API.";
     };
 
+    cryptkeyFile = mkOption {
+      type = types.path;
+      description = "Path to a file containig the password used for AES encryption of bot passwords. The file must be readable by the <literal>asf</literal> user/group.";
+    };
+
     dataDir = mkOption {
       type = types.path;
       default = "/var/lib/asf";
@@ -177,6 +182,9 @@ in
           (mkIf (cfg.dataDir == "/var/lib/asf") {
             StateDirectory = "asf";
             StateDirectoryMode = "700";
+          })
+          (mkIf (cfg.cryptkeyFile != {}) {
+            EnvironmentFile = "${cfg.cryptkeyFile}";
           })
           {
             User = "asf";
