@@ -27,4 +27,5 @@ clean:
 generated:
 	nix-build ../../release.nix \
 		--attr manualGeneratedSources.x86_64-linux \
+		--builders "" \
 		--out-link ./generated
