@@ -22106,6 +22106,8 @@ with pkgs;
 
   mbtileserver = callPackage ../servers/geospatial/mbtileserver { };
 
+  mediagoblin = callPackage ../servers/mediagoblin { };
+
   memcached = callPackage ../servers/memcached {};
 
   meteor = callPackage ../servers/meteor { };
