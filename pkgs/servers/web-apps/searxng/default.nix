@@ -14,6 +14,10 @@ python3.pkgs.buildPythonApplication rec {
     sha256 = "sha256-Fuv9AoV9WnI6qMgj4Ve016RF8gaLXYgw89jRROcm/A8=";
   };
 
+  patches = [
+    ./morty-secret-string.patch
+  ];
+
   postPatch = ''
     sed -i 's/==.*$//' requirements.txt
   '';
